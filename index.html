@@ -2,238 +2,804 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>Muhammadjon Zoirov | Full-Stack Developer</title>
+    <!-- Tailwind + Inter Font -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap"
       rel="stylesheet"
     />
-
+    <!-- Font Awesome Icons (optional but adds polish) -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
       body {
         font-family: "Inter", sans-serif;
         background: #050816;
-        color: white;
+        color: #f1f5f9;
         scroll-behavior: smooth;
         overflow-x: hidden;
       }
-      .gradient {
-        background: linear-gradient(135deg, #6366f1, #22c55e, #06b6d4);
+      /* animated gradient text */
+      .gradient-text {
+        background: linear-gradient(135deg, #818cf8, #4ade80, #2dd4bf);
+        background-size: 200% auto;
         -webkit-background-clip: text;
+        background-clip: text;
         color: transparent;
+        animation: shimmer 6s linear infinite;
       }
-      .bg-glow {
+      @keyframes shimmer {
+        0% {
+          background-position: 0% center;
+        }
+        100% {
+          background-position: 200% center;
+        }
+      }
+      /* floating glow orbs */
+      .glow-orb {
         position: fixed;
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(circle, #6366f155, transparent 70%);
-        filter: blur(120px);
-        z-index: -1;
-        animation: float 12s infinite alternate;
+        width: 500px;
+        height: 500px;
+        background: radial-gradient(
+          circle,
+          rgba(99, 102, 241, 0.4),
+          rgba(34, 197, 94, 0.1) 70%
+        );
+        filter: blur(100px);
+        border-radius: 50%;
+        z-index: -2;
+        animation: floatGlow 18s infinite alternate ease-in-out;
       }
-      @keyframes float {
-        from {
-          transform: translate(-100px, -100px);
+      @keyframes floatGlow {
+        0% {
+          transform: translate(-10%, -10%) scale(1);
+          opacity: 0.5;
         }
-        to {
-          transform: translate(200px, 200px);
+        100% {
+          transform: translate(15%, 20%) scale(1.3);
+          opacity: 0.7;
         }
       }
-      .card {
-        background: #0f172a;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        transition: all 0.35s ease;
-        cursor: pointer;
+      /* card styles */
+      .project-card {
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(2px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        border-radius: 1.5rem;
       }
-      .card:hover {
-        transform: translateY(-10px) scale(1.03);
-        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+      .project-card:hover {
+        transform: translateY(-12px) scale(1.02);
+        border-color: rgba(129, 140, 248, 0.5);
+        box-shadow:
+          0 25px 35px -15px rgba(0, 0, 0, 0.6),
+          0 0 0 1px rgba(99, 102, 241, 0.3);
+        background: #0f172ae6;
       }
-      .fade {
+      .skill-badge {
+        background: #111827;
+        border: 1px solid #1e293b;
+        transition: all 0.2s;
+        border-radius: 1rem;
+        font-weight: 500;
+        backdrop-filter: blur(4px);
+      }
+      .skill-badge:hover {
+        transform: translateY(-5px);
+        border-color: #4ade80;
+        background: #1e293b;
+        box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+      }
+      /* fade-up animation */
+      .fade-up {
         opacity: 0;
         transform: translateY(40px);
-        transition: all 0.9s ease;
+        transition:
+          opacity 0.8s ease,
+          transform 0.7s ease;
       }
-      .fade.show {
+      .fade-up.revealed {
         opacity: 1;
         transform: translateY(0);
       }
-      .hero {
-        background: radial-gradient(circle at top, #1e293b, #020617);
+      /* mobile menu slide + backdrop */
+      .mobile-nav {
+        transition: all 0.3s ease-in-out;
       }
-      .btn {
-        box-shadow: 0 0 25px rgba(99, 102, 241, 0.7);
+      .menu-open {
+        overflow: hidden;
       }
-      .skill {
-        background: #0f172a;
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        padding: 10px;
-        border-radius: 12px;
+      /* smooth link highlight */
+      .nav-link {
+        position: relative;
+      }
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -4px;
+        left: 0;
+        background: linear-gradient(90deg, #818cf8, #4ade80);
+        transition: width 0.3s;
+      }
+      .nav-link:hover::after {
+        width: 100%;
+      }
+      /* typing cursor effect */
+      #typed-output {
+        min-height: 3rem;
+        font-weight: 400;
+      }
+      .cursor {
+        display: inline-block;
+        width: 2px;
+        background-color: #4ade80;
+        margin-left: 2px;
+        animation: blink 1s infinite;
+      }
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+      button:focus,
+      a:focus {
+        outline: 2px solid #4ade80;
+        outline-offset: 2px;
       }
     </style>
   </head>
-  <body>
-    <div class="bg-glow"></div>
-    <header class="fixed top-0 w-full backdrop-blur bg-black/40 z-50">
-      <div
-        class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4"
-      >
-        <h1 class="font-bold text-lg gradient">Zoirov.dev</h1>
-        <nav class="space-x-8 text-sm text-gray-300">
-          <a href="#about" class="hover:text-white">About</a>
-          <a href="#skills" class="hover:text-white">Skills</a>
-          <a href="#projects" class="hover:text-white">Projects</a>
-          <a href="#contact" class="hover:text-white">Contact</a>
-        </nav>
-      </div>
-    </header>
-    <section
-      class="hero min-h-screen flex items-center justify-center text-center px-6"
+  <body class="antialiased">
+    <!-- floating orbs for atmosphere -->
+    <div class="glow-orb" style="top: -10%; left: -10%"></div>
+    <div
+      class="glow-orb"
+      style="
+        bottom: -15%;
+        right: -5%;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(
+          circle,
+          rgba(34, 197, 94, 0.25),
+          rgba(6, 182, 212, 0.1)
+        );
+        animation-duration: 22s;
+      "
+    ></div>
+
+    <!-- Header / Navbar (fully responsive + fixed menu) -->
+    <header
+      class="fixed top-0 left-0 w-full z-50 backdrop-blur-xl bg-black/40 border-b border-white/5 shadow-md"
     >
-      <div class="max-w-3xl">
-        <h1 class="text-5xl md:text-6xl font-bold mb-6">
-          Muhammadjon <span class="gradient">Zoirov</span>
-        </h1>
-        <p class="text-xl text-gray-400 mb-6">Full-Stack Developer</p>
-        <p id="typing" class="text-gray-300 text-lg"></p>
-        <div class="mt-10 flex justify-center gap-4">
-          <button
-            onclick="
-              document
-                .getElementById('projects')
-                .scrollIntoView({ behavior: 'smooth' })
-            "
-            class="px-8 py-3 rounded-xl bg-indigo-600 btn hover:scale-105 transition"
+      <div
+        class="max-w-7xl mx-auto px-5 sm:px-8 py-3 flex items-center justify-between"
+      >
+        <!-- Logo -->
+        <a href="#" class="text-2xl font-extrabold tracking-tight">
+          <span class="gradient-text">Zoirov.dev</span>
+        </a>
+
+        <!-- Desktop Navigation (hidden on mobile) -->
+        <nav
+          class="hidden md:flex items-center gap-7 text-gray-300 font-medium"
+        >
+          <a href="#about" class="nav-link hover:text-white transition text-sm"
+            >About</a
           >
-            View Projects
-          </button>
+          <a href="#skills" class="nav-link hover:text-white transition text-sm"
+            >Skills</a
+          >
+          <a
+            href="#projects"
+            class="nav-link hover:text-white transition text-sm"
+            >Projects</a
+          >
           <a
             href="#contact"
-            class="px-8 py-3 rounded-xl border border-gray-700 hover:bg-gray-800 transition"
-            >Contact Me</a
+            class="nav-link hover:text-white transition text-sm"
+            >Contact</a
           >
+        </nav>
+
+        <!-- Mobile Hamburger Button (only visible on small screens) -->
+        <button
+          id="menuBtn"
+          class="md:hidden text-white text-3xl focus:outline-none transition hover:scale-110"
+          aria-label="Open menu"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+
+      <!-- Mobile Dropdown Menu (fully responsive, animated) -->
+      <div
+        id="mobileMenu"
+        class="md:hidden fixed top-0 left-0 w-full h-screen bg-black/95 backdrop-blur-lg z-40 transform -translate-y-full transition-transform duration-300 ease-out flex flex-col items-center justify-center gap-8 text-xl"
+      >
+        <button
+          id="closeMenuBtn"
+          class="absolute top-6 right-6 text-3xl text-white"
+          aria-label="Close menu"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+        <a
+          href="#about"
+          class="mobile-nav-link text-gray-200 hover:text-green-400 text-2xl font-semibold py-2 transition"
+          >About</a
+        >
+        <a
+          href="#skills"
+          class="mobile-nav-link text-gray-200 hover:text-green-400 text-2xl font-semibold py-2 transition"
+          >Skills</a
+        >
+        <a
+          href="#projects"
+          class="mobile-nav-link text-gray-200 hover:text-green-400 text-2xl font-semibold py-2 transition"
+          >Projects</a
+        >
+        <a
+          href="#contact"
+          class="mobile-nav-link text-gray-200 hover:text-green-400 text-2xl font-semibold py-2 transition"
+          >Contact</a
+        >
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Section -->
+      <section
+        class="min-h-screen flex items-center justify-center relative pt-20 px-6"
+      >
+        <div class="max-w-4xl text-center">
+          <div class="mb-5 inline-flex">
+            <span
+              class="bg-indigo-500/20 text-indigo-300 rounded-full px-4 py-1 text-sm font-mono backdrop-blur-sm border border-indigo-400/30"
+              >Full-Stack Engineer</span
+            >
+          </div>
+          <h1
+            class="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-tight tracking-tight mb-5"
+          >
+            Muhammadjon <span class="gradient-text">Zoirov</span>
+          </h1>
+          <p class="text-gray-300 text-xl md:text-2xl mb-5">
+            Building high-performance web experiences
+          </p>
+          <div
+            id="typed-output"
+            class="text-gray-400 text-lg sm:text-xl font-mono mb-8 h-14"
+          ></div>
+          <div class="flex flex-col sm:flex-row gap-5 justify-center">
+            <button
+              onclick="
+                document
+                  .getElementById('projects')
+                  .scrollIntoView({ behavior: 'smooth' })
+              "
+              class="group relative px-8 py-3 bg-indigo-600 rounded-xl font-semibold shadow-lg shadow-indigo-600/30 hover:shadow-indigo-500/50 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              <span>✨ View Projects</span>
+            </button>
+            <a
+              href="#contact"
+              class="px-8 py-3 rounded-xl border border-gray-600 hover:bg-white/5 hover:border-green-400 transition-all duration-300 font-medium backdrop-blur-sm flex items-center justify-center gap-2"
+            >
+              <i class="fas fa-paper-plane"></i> Contact Me
+            </a>
+          </div>
         </div>
-      </div>
-    </section>
-    <section id="about" class="max-w-6xl mx-auto px-6 py-28 fade">
-      <h2 class="text-3xl font-bold mb-10">About Me</h2>
-      <p class="text-gray-400 text-lg leading-relaxed max-w-3xl">
-        My name is Muhammadjon Zoirov. I started school at the age of 5 and
-        graduated at 16. After that I focused on programming and started working
-        on online projects. I have over 3 years of experience building modern
-        web platforms, scalable backends, and high-performance UIs using React,
-        Next.js, and Node.js.
-      </p>
-    </section>
-    <section id="skills" class="max-w-6xl mx-auto px-6 py-28 fade">
-      <h2 class="text-3xl font-bold mb-12">Technical Skills</h2>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-        <div class="skill">HTML</div>
-        <div class="skill">CSS</div>
-        <div class="skill">JavaScript</div>
-        <div class="skill">TypeScript</div>
-        <div class="skill">React</div>
-        <div class="skill">Next.js</div>
-        <div class="skill">Redux</div>
-        <div class="skill">TailwindCSS</div>
-        <div class="skill">Bootstrap</div>
-        <div class="skill">Material UI</div>
-        <div class="skill">Node.js</div>
-        <div class="skill">NestJS</div>
-        <div class="skill">Express</div>
-        <div class="skill">MongoDB</div>
-        <div class="skill">MySQL</div>
-        <div class="skill">PostgreSQL</div>
-        <div class="skill">Docker</div>
-        <div class="skill">Linux</div>
-        <div class="skill">Git</div>
-        <div class="skill">GitHub</div>
-        <div class="skill">Figma</div>
-        <div class="skill">Socket.io</div>
-        <div class="skill">NPM</div>
-        <div class="skill">Yarn</div>
-      </div>
-    </section>
-    <section id="projects" class="max-w-7xl mx-auto px-6 py-28 fade">
-      <h2 class="text-3xl font-bold mb-14">Featured Projects</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <a
-          href="https://cars.uz"
-          target="_blank"
-          class="card p-6 rounded-2xl block"
-          ><h3 class="text-xl font-semibold mb-2">Cars.uz</h3>
-          <p class="text-gray-400 text-sm">
-            Automobile marketplace platform.
-          </p></a
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="max-w-7xl mx-auto px-6 py-24 md:py-32 fade-up">
+        <div class="flex flex-col md:flex-row gap-12 items-center">
+          <div class="md:w-2/3">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+              <span class="gradient-text">About me</span>
+            </h2>
+            <p class="text-gray-300 text-base md:text-lg leading-relaxed">
+              Muhammadjon Zoirov — I started school at age 5 and graduated at
+              16, embracing logic and creativity early. Since then, I've been
+              fully dedicated to modern web development. With
+              <span class="text-green-400 font-semibold">3+ years</span> of
+              hands-on experience, I architect full-stack solutions using
+              <strong class="text-indigo-300"
+                >React, Next.js, Node.js (NestJS/Express),</strong
+              >
+              and cloud-ready databases. I love crafting responsive, accessible
+              interfaces and robust backend systems that scale. Beyond code, I'm
+              passionate about UI/UX, performance optimization, and mentoring
+              fellow developers.
+            </p>
+            <div class="mt-6 flex flex-wrap gap-3">
+              <span
+                class="bg-indigo-900/40 text-indigo-200 px-3 py-1 rounded-full text-sm"
+                ><i class="far fa-clock mr-1"></i> Fast learner</span
+              >
+              <span
+                class="bg-emerald-900/40 text-emerald-200 px-3 py-1 rounded-full text-sm"
+                ><i class="fas fa-code mr-1"></i> Clean code</span
+              >
+              <span
+                class="bg-cyan-900/40 text-cyan-200 px-3 py-1 rounded-full text-sm"
+                ><i class="fas fa-mobile-alt mr-1"></i> Mobile-first</span
+              >
+            </div>
+          </div>
+          <div class="md:w-1/3 flex justify-center">
+            <div
+              class="w-44 h-44 md:w-56 md:h-56 rounded-full bg-gradient-to-tr from-indigo-500 to-emerald-400 p-1 shadow-2xl"
+            >
+              <div
+                class="w-full h-full rounded-full bg-[#050816] flex items-center justify-center text-6xl font-bold text-white"
+              >
+                MZ
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Skills Section -->
+      <section id="skills" class="max-w-7xl mx-auto px-6 py-20 fade-up">
+        <div class="text-center md:text-left mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            <span class="gradient-text">Tech Arsenal</span>
+          </h2>
+          <p class="text-gray-400 max-w-2xl">
+            Modern tools & frameworks I master to turn ideas into reality
+          </p>
+        </div>
+        <div
+          class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"
         >
-        <a
-          href="https://evoss.uz"
-          target="_blank"
-          class="card p-6 rounded-2xl block"
-          ><h3 class="text-xl font-semibold mb-2">Evoss.uz</h3>
-          <p class="text-gray-400 text-sm">
-            Restaurant digital ordering platform.
-          </p></a
+          <!-- skills list with icons for better readability -->
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-html5 text-orange-400 text-2xl"></i
+            ><span class="text-sm font-medium">HTML5</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-css3-alt text-blue-400 text-2xl"></i
+            ><span>CSS3</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-js text-yellow-400 text-2xl"></i
+            ><span>JavaScript</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-typescript text-blue-500 text-2xl"></i
+            ><span>TypeScript</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-react text-cyan-400 text-2xl"></i
+            ><span>React</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-node-js text-green-500 text-2xl"></i
+            ><span>Next.js</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fas fa-chart-line text-purple-400 text-2xl"></i
+            ><span>Redux</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-tailwind text-sky-400 text-2xl"></i
+            ><span>Tailwind</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-bootstrap text-purple-300 text-2xl"></i
+            ><span>Bootstrap</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fas fa-database text-emerald-400 text-2xl"></i
+            ><span>MongoDB</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fas fa-database text-blue-400 text-2xl"></i
+            ><span>PostgreSQL</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-docker text-blue-300 text-2xl"></i
+            ><span>Docker</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-git-alt text-red-400 text-2xl"></i
+            ><span>Git/GitHub</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fas fa-network-wired text-indigo-300 text-2xl"></i
+            ><span>NestJS</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fas fa-cloud text-gray-300 text-2xl"></i
+            ><span>Linux</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-figma text-pink-400 text-2xl"></i
+            ><span>Figma</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fas fa-plug text-yellow-300 text-2xl"></i
+            ><span>Socket.io</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fab fa-npm text-red-400 text-2xl"></i
+            ><span>NPM/Yarn</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fas fa-code-branch text-lime-400 text-2xl"></i
+            ><span>Express</span>
+          </div>
+          <div
+            class="skill-badge p-3 text-center flex flex-col items-center gap-1"
+          >
+            <i class="fas fa-database text-teal-300 text-2xl"></i
+            ><span>MySQL</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects Section - fully responsive with cards and external links -->
+      <section id="projects" class="max-w-7xl mx-auto px-6 py-20 fade-up">
+        <div class="mb-12">
+          <h2 class="text-3xl md:text-4xl font-bold mb-3">
+            <span class="gradient-text">Featured Projects</span>
+          </h2>
+          <p class="text-gray-400">
+            Real-world platforms & live demos I've built
+          </p>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+          <!-- Project cards with direct links -->
+          <a
+            href="https://cars.uz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-card p-6 transition group"
+          >
+            <div class="flex justify-between items-start">
+              <h3
+                class="text-xl font-bold text-white group-hover:text-indigo-300 transition"
+              >
+                Cars.uz
+              </h3>
+              <i
+                class="fas fa-arrow-up-right-from-sets text-gray-500 group-hover:text-indigo-400"
+              ></i>
+            </div>
+            <p class="text-gray-400 text-sm mt-2">
+              Full automobile marketplace — high performance search & filters
+            </p>
+            <div class="mt-4 flex gap-2 text-xs">
+              <span class="bg-black/40 px-2 py-1 rounded">React</span
+              ><span class="bg-black/40 px-2 py-1 rounded">Node.js</span
+              ><span class="bg-black/40 px-2 py-1 rounded">MongoDB</span>
+            </div>
+          </a>
+          <a
+            href="https://evoss.uz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-card p-6 transition group"
+          >
+            <div class="flex justify-between items-start">
+              <h3
+                class="text-xl font-bold text-white group-hover:text-indigo-300"
+              >
+                Evoss.uz
+              </h3>
+              <i class="fas fa-arrow-up-right-from-sets text-gray-500"></i>
+            </div>
+            <p class="text-gray-400 text-sm mt-2">
+              Digital restaurant ordering & management platform
+            </p>
+            <div class="mt-4 flex gap-2 text-xs">
+              <span class="bg-black/40 px-2 py-1 rounded">Next.js</span
+              ><span class="bg-black/40 px-2 py-1 rounded">Tailwind</span
+              ><span class="bg-black/40 px-2 py-1 rounded">NestJS</span>
+            </div>
+          </a>
+          <a
+            href="https://aroma-coffee.uz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-card p-6 transition group"
+          >
+            <div class="flex justify-between items-start">
+              <h3
+                class="text-xl font-bold text-white group-hover:text-indigo-300"
+              >
+                Aroma Coffee
+              </h3>
+              <i class="fas fa-external-link-alt text-gray-500"></i>
+            </div>
+            <p class="text-gray-400 text-sm mt-2">
+              Elegant coffee shop website with responsive design & online menu
+            </p>
+            <div class="mt-4 flex gap-2 text-xs">
+              <span class="bg-black/40 px-2 py-1 rounded">HTML/CSS</span
+              ><span class="bg-black/40 px-2 py-1 rounded">JS</span
+              ><span class="bg-black/40 px-2 py-1 rounded">GSAP</span>
+            </div>
+          </a>
+          <a
+            href="https://restaurant-gusto.uz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-card p-6 transition group"
+          >
+            <div class="flex justify-between items-start">
+              <h3
+                class="text-xl font-bold text-white group-hover:text-indigo-300"
+              >
+                Restaurant Gusto
+              </h3>
+              <i class="fas fa-arrow-up-right-from-sets text-gray-500"></i>
+            </div>
+            <p class="text-gray-400 text-sm mt-2">
+              Modern restaurant landing with reservations and gallery
+            </p>
+            <div class="mt-4 flex gap-2 text-xs">
+              <span class="bg-black/40 px-2 py-1 rounded">React</span
+              ><span class="bg-black/40 px-2 py-1 rounded">Framer</span>
+            </div>
+          </a>
+          <a
+            href="https://axies.uz"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="project-card p-6 transition group"
+          >
+            <div class="flex justify-between items-start">
+              <h3
+                class="text-xl font-bold text-white group-hover:text-indigo-300"
+              >
+                Axies.uz
+              </h3>
+              <i class="fas fa-external-link-alt text-gray-500"></i>
+            </div>
+            <p class="text-gray-400 text-sm mt-2">
+              Business intelligence & corporate platform solution
+            </p>
+            <div class="mt-4 flex gap-2 text-xs">
+              <span class="bg-black/40 px-2 py-1 rounded">TypeScript</span
+              ><span class="bg-black/40 px-2 py-1 rounded">PostgreSQL</span
+              ><span class="bg-black/40 px-2 py-1 rounded">Prisma</span>
+            </div>
+          </a>
+          <!-- additional custom project for showcase -->
+          <div class="project-card p-6 transition group cursor-default">
+            <h3 class="text-xl font-bold text-white">Portfolio 2025</h3>
+            <p class="text-gray-400 text-sm mt-2">
+              Modern developer portfolio — fully responsive, animated UI
+            </p>
+            <div class="mt-4 flex gap-2 text-xs">
+              <span class="bg-black/40 px-2 py-1 rounded">Tailwind</span
+              ><span class="bg-black/40 px-2 py-1 rounded"
+                >Intersection Observer</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section
+        id="contact"
+        class="max-w-5xl mx-auto px-6 py-20 md:py-28 fade-up"
+      >
+        <div
+          class="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 md:p-12 text-center shadow-2xl"
         >
-        <a
-          href="https://aroma-coffee.uz"
-          target="_blank"
-          class="card p-6 rounded-2xl block"
-          ><h3 class="text-xl font-semibold mb-2">Aroma Coffee</h3>
-          <p class="text-gray-400 text-sm">Coffee shop website.</p></a
-        >
-        <a
-          href="https://restaurant-gusto.uz"
-          target="_blank"
-          class="card p-6 rounded-2xl block"
-          ><h3 class="text-xl font-semibold mb-2">Restaurant Gusto</h3>
-          <p class="text-gray-400 text-sm">Modern restaurant website.</p></a
-        >
-        <a
-          href="https://axies.uz"
-          target="_blank"
-          class="card p-6 rounded-2xl block"
-          ><h3 class="text-xl font-semibold mb-2">Axies.uz</h3>
-          <p class="text-gray-400 text-sm">Business platform.</p></a
-        >
-      </div>
-    </section>
-    <section id="contact" class="text-center py-28 px-6 fade">
-      <h2 class="text-3xl font-bold mb-8">Contact</h2>
-      <p class="text-gray-400 mb-8">
-        If you want to collaborate or hire me for a project feel free to contact
-        me.
-      </p>
-      <div class="space-y-3 text-lg">
-        <p>📞 +998 97 521 31 30</p>
-        <p>📧 muhammadzoirov174@gmail.com</p>
-        <p>💬 Telegram: @x_shop_admin</p>
-      </div>
-    </section>
-    <footer class="text-center text-gray-500 pb-10">
-      © 2026 Muhammadjon Zoirov — Full-Stack Developer
+          <h2 class="text-3xl md:text-4xl font-bold mb-5">Let's Connect</h2>
+          <p class="text-gray-300 text-lg max-w-xl mx-auto mb-10">
+            Whether you have a project in mind, a collaboration idea, or just
+            want to say hi — I'm always open to chat.
+          </p>
+          <div class="grid sm:grid-cols-2 gap-6 text-left max-w-2xl mx-auto">
+            <div class="flex items-center gap-4 bg-black/30 p-4 rounded-xl">
+              <i class="fas fa-phone-alt text-green-400 text-2xl"></i>
+              <div>
+                <p class="text-sm text-gray-400">Phone</p>
+                <p class="font-medium">+998 97 521 31 30</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 bg-black/30 p-4 rounded-xl">
+              <i class="fas fa-envelope text-indigo-400 text-2xl"></i>
+              <div>
+                <p class="text-sm text-gray-400">Email</p>
+                <p class="font-medium break-all">muhammadzoirov174@gmail.com</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 bg-black/30 p-4 rounded-xl">
+              <i class="fab fa-telegram text-sky-400 text-2xl"></i>
+              <div>
+                <p class="text-sm text-gray-400">Telegram</p>
+                <p class="font-medium">@x_shop_admin</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-4 bg-black/30 p-4 rounded-xl">
+              <i class="fab fa-github text-gray-300 text-2xl"></i>
+              <div>
+                <p class="text-sm text-gray-400">GitHub</p>
+                <p class="font-medium">@zoirovdev</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-10 text-center text-gray-500 text-sm">
+            📍 Based in Uzbekistan • Available for remote & freelance work
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer
+      class="text-center text-gray-500 py-8 border-t border-white/5 text-sm"
+    >
+      © 2026 Muhammadjon Zoirov — Full-Stack Developer. Crafted with 💻 & ⚡
     </footer>
+
     <script>
-      const text =
-        "React • Next.js • Node.js • Scalable Backend • Modern Web Applications";
-      let i = 0;
-      function type() {
-        if (i < text.length) {
-          document.getElementById("typing").innerHTML += text.charAt(i);
-          i++;
-          setTimeout(type, 40);
-        }
+      // ========== MOBILE MENU LOGIC (perfect responsive toggle) ==========
+      const menuBtn = document.getElementById("menuBtn");
+      const mobileMenu = document.getElementById("mobileMenu");
+      const closeMenuBtn = document.getElementById("closeMenuBtn");
+      const body = document.body;
+
+      function openMenu() {
+        mobileMenu.classList.remove("-translate-y-full");
+        mobileMenu.classList.add("translate-y-0");
+        body.classList.add("menu-open");
+        body.style.overflow = "hidden";
       }
-      type();
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("show");
+      function closeMenu() {
+        mobileMenu.classList.add("-translate-y-full");
+        mobileMenu.classList.remove("translate-y-0");
+        body.classList.remove("menu-open");
+        body.style.overflow = "";
+      }
+
+      if (menuBtn) menuBtn.addEventListener("click", openMenu);
+      if (closeMenuBtn) closeMenuBtn.addEventListener("click", closeMenu);
+      // close menu when clicking any mobile nav link
+      document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+        link.addEventListener("click", (e) => {
+          closeMenu();
+          // smooth scroll target
+          const targetId = link.getAttribute("href");
+          if (targetId && targetId !== "#") {
+            e.preventDefault();
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) targetEl.scrollIntoView({ behavior: "smooth" });
           }
         });
       });
-      document.querySelectorAll(".fade").forEach((el) => observer.observe(el));
+      // also handle desktop links smooth scroll for consistency
+      document
+        .querySelectorAll('a[href^="#"]:not(.mobile-nav-link)')
+        .forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
+            const hash = this.getAttribute("href");
+            if (hash === "#" || hash === "") return;
+            const target = document.querySelector(hash);
+            if (target) {
+              e.preventDefault();
+              target.scrollIntoView({ behavior: "smooth" });
+              // close mobile menu if open just in case
+              if (
+                mobileMenu &&
+                !mobileMenu.classList.contains("-translate-y-full")
+              )
+                closeMenu();
+            }
+          });
+        });
+
+      // TYPING EFFECT (full interactive)
+      const typedText =
+        "React • Next.js • Node.js • Scalable Backend • Modern Web Applications";
+      let idx = 0;
+      const outputSpan = document.getElementById("typed-output");
+      function typeNext() {
+        if (idx < typedText.length) {
+          outputSpan.innerHTML =
+            typedText.substring(0, idx + 1) + '<span class="cursor">|</span>';
+          idx++;
+          setTimeout(typeNext, 45);
+        } else {
+          // keep cursor blinking
+          outputSpan.innerHTML = typedText + '<span class="cursor">|</span>';
+          setInterval(() => {
+            const cursorSpan = document.querySelector("#typed-output .cursor");
+            if (cursorSpan)
+              cursorSpan.style.opacity =
+                cursorSpan.style.opacity === "0" ? "1" : "0";
+          }, 550);
+        }
+      }
+      typeNext();
+
+      // FADE-UP ON SCROLL (Intersection Observer)
+      const fadeElements = document.querySelectorAll(".fade-up");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -40px 0px" },
+      );
+      fadeElements.forEach((el) => observer.observe(el));
+
+      // pre-reveal some sections on load if needed
+      window.addEventListener("load", () => {
+        // if any section already visible
+        fadeElements.forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 100) el.classList.add("revealed");
+        });
+      });
     </script>
   </body>
 </html>
