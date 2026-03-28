@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Muhammadjon Zoirov | Full-Stack Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: #050816;
+        color: white;
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+      }
+      .gradient {
+        background: linear-gradient(135deg, #6366f1, #22c55e, #06b6d4);
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+      .bg-glow {
+        position: fixed;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, #6366f155, transparent 70%);
+        filter: blur(120px);
+        z-index: -1;
+        animation: float 12s infinite alternate;
+      }
+      @keyframes float {
+        from {
+          transform: translate(-100px, -100px);
+        }
+        to {
+          transform: translate(200px, 200px);
+        }
+      }
+      .card {
+        background: #0f172a;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.35s ease;
+        cursor: pointer;
+      }
+      .card:hover {
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6);
+      }
+      .fade {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.9s ease;
+      }
+      .fade.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .hero {
+        background: radial-gradient(circle at top, #1e293b, #020617);
+      }
+      .btn {
+        box-shadow: 0 0 25px rgba(99, 102, 241, 0.7);
+      }
+      .skill {
+        background: #0f172a;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 10px;
+        border-radius: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-glow"></div>
+    <header class="fixed top-0 w-full backdrop-blur bg-black/40 z-50">
+      <div
+        class="max-w-7xl mx-auto flex justify-between items-center px-6 py-4"
+      >
+        <h1 class="font-bold text-lg gradient">Zoirov.dev</h1>
+        <nav class="space-x-8 text-sm text-gray-300">
+          <a href="#about" class="hover:text-white">About</a>
+          <a href="#skills" class="hover:text-white">Skills</a>
+          <a href="#projects" class="hover:text-white">Projects</a>
+          <a href="#contact" class="hover:text-white">Contact</a>
+        </nav>
+      </div>
+    </header>
+    <section
+      class="hero min-h-screen flex items-center justify-center text-center px-6"
+    >
+      <div class="max-w-3xl">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6">
+          Muhammadjon <span class="gradient">Zoirov</span>
+        </h1>
+        <p class="text-xl text-gray-400 mb-6">Full-Stack Developer</p>
+        <p id="typing" class="text-gray-300 text-lg"></p>
+        <div class="mt-10 flex justify-center gap-4">
+          <button
+            onclick="
+              document
+                .getElementById('projects')
+                .scrollIntoView({ behavior: 'smooth' })
+            "
+            class="px-8 py-3 rounded-xl bg-indigo-600 btn hover:scale-105 transition"
+          >
+            View Projects
+          </button>
+          <a
+            href="#contact"
+            class="px-8 py-3 rounded-xl border border-gray-700 hover:bg-gray-800 transition"
+            >Contact Me</a
+          >
+        </div>
+      </div>
+    </section>
+    <section id="about" class="max-w-6xl mx-auto px-6 py-28 fade">
+      <h2 class="text-3xl font-bold mb-10">About Me</h2>
+      <p class="text-gray-400 text-lg leading-relaxed max-w-3xl">
+        My name is Muhammadjon Zoirov. I started school at the age of 5 and
+        graduated at 16. After that I focused on programming and started working
+        on online projects. I have over 3 years of experience building modern
+        web platforms, scalable backends, and high-performance UIs using React,
+        Next.js, and Node.js.
+      </p>
+    </section>
+    <section id="skills" class="max-w-6xl mx-auto px-6 py-28 fade">
+      <h2 class="text-3xl font-bold mb-12">Technical Skills</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="skill">HTML</div>
+        <div class="skill">CSS</div>
+        <div class="skill">JavaScript</div>
+        <div class="skill">TypeScript</div>
+        <div class="skill">React</div>
+        <div class="skill">Next.js</div>
+        <div class="skill">Redux</div>
+        <div class="skill">TailwindCSS</div>
+        <div class="skill">Bootstrap</div>
+        <div class="skill">Material UI</div>
+        <div class="skill">Node.js</div>
+        <div class="skill">NestJS</div>
+        <div class="skill">Express</div>
+        <div class="skill">MongoDB</div>
+        <div class="skill">MySQL</div>
+        <div class="skill">PostgreSQL</div>
+        <div class="skill">Docker</div>
+        <div class="skill">Linux</div>
+        <div class="skill">Git</div>
+        <div class="skill">GitHub</div>
+        <div class="skill">Figma</div>
+        <div class="skill">Socket.io</div>
+        <div class="skill">NPM</div>
+        <div class="skill">Yarn</div>
+      </div>
+    </section>
+    <section id="projects" class="max-w-7xl mx-auto px-6 py-28 fade">
+      <h2 class="text-3xl font-bold mb-14">Featured Projects</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <a
+          href="https://cars.uz"
+          target="_blank"
+          class="card p-6 rounded-2xl block"
+          ><h3 class="text-xl font-semibold mb-2">Cars.uz</h3>
+          <p class="text-gray-400 text-sm">
+            Automobile marketplace platform.
+          </p></a
+        >
+        <a
+          href="https://evoss.uz"
+          target="_blank"
+          class="card p-6 rounded-2xl block"
+          ><h3 class="text-xl font-semibold mb-2">Evoss.uz</h3>
+          <p class="text-gray-400 text-sm">
+            Restaurant digital ordering platform.
+          </p></a
+        >
+        <a
+          href="https://aroma-coffee.uz"
+          target="_blank"
+          class="card p-6 rounded-2xl block"
+          ><h3 class="text-xl font-semibold mb-2">Aroma Coffee</h3>
+          <p class="text-gray-400 text-sm">Coffee shop website.</p></a
+        >
+        <a
+          href="https://restaurant-gusto.uz"
+          target="_blank"
+          class="card p-6 rounded-2xl block"
+          ><h3 class="text-xl font-semibold mb-2">Restaurant Gusto</h3>
+          <p class="text-gray-400 text-sm">Modern restaurant website.</p></a
+        >
+        <a
+          href="https://axies.uz"
+          target="_blank"
+          class="card p-6 rounded-2xl block"
+          ><h3 class="text-xl font-semibold mb-2">Axies.uz</h3>
+          <p class="text-gray-400 text-sm">Business platform.</p></a
+        >
+      </div>
+    </section>
+    <section id="contact" class="text-center py-28 px-6 fade">
+      <h2 class="text-3xl font-bold mb-8">Contact</h2>
+      <p class="text-gray-400 mb-8">
+        If you want to collaborate or hire me for a project feel free to contact
+        me.
+      </p>
+      <div class="space-y-3 text-lg">
+        <p>📞 +998 97 521 31 30</p>
+        <p>📧 muhammadzoirov174@gmail.com</p>
+        <p>💬 Telegram: @x_shop_admin</p>
+      </div>
+    </section>
+    <footer class="text-center text-gray-500 pb-10">
+      © 2026 Muhammadjon Zoirov — Full-Stack Developer
+    </footer>
+    <script>
+      const text =
+        "React • Next.js • Node.js • Scalable Backend • Modern Web Applications";
+      let i = 0;
+      function type() {
+        if (i < text.length) {
+          document.getElementById("typing").innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, 40);
+        }
+      }
+      type();
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("show");
+          }
+        });
+      });
+      document.querySelectorAll(".fade").forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
